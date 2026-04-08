@@ -1,0 +1,6 @@
+__pycache__/
+Fig/
+*~
+*.parquet
+*.json
+*.dat
