@@ -17,9 +17,9 @@ class PlotParams:
         ####
         self.ColNames = [
             ##### Object parameters
-            "Mass_Msun",
+            "Mass_CA",
             "vff",
-            "radius_Rsun",
+            "Radius_CA",
             ##### Fitting Parameters
             "v0",
             "n0",
@@ -29,10 +29,10 @@ class PlotParams:
             ##### Combined
             "Mdot_Msun",
             "vRat",
-            "BFlux",
+            "BField",
             "Lacc",
             ##### Literature Values
-            'CA_LaccLin',
+            'LaccLin_CA',
             "LaccRat",
         ]
         Lines =  ['Ha','Hb','Hg','H6','H8','H9','Pb']
@@ -75,7 +75,7 @@ def main(args):
     ycol = NameNormalize(ycol)
     #########################
     PrefixFid = "SpecFit_Fid."
-    PrefixBCS = "SpecFit_BC."
+    PrefixBCS = "SpecFit_BCS."
     Clist = []
     Lpf = []
     LMask = []
@@ -128,7 +128,7 @@ def main(args):
 
 def ReferenceFuncs(xx, yy):
     def Lacc_Lline(aa, bb):
-        if aa in ["Lacc", "CA_LaccLin"]:
+        if aa in ["Lacc", "LaccLin_CA"]:
             if any([key in bb for key in ["Lum_BC", "Lum_Obs", "Lum_Fit"]]):
                 line = bb.split("_")[-1]
                 return line
@@ -151,11 +151,12 @@ def ReferenceFuncs(xx, yy):
 
 
 def NameNormalize(LNames):
-    mapping = {'mass':   'Mass_Msun',
-               'radius': 'radius_Rsun',
+    mapping = {'mass':   'Mass_CA',
+               'radius': 'Radius_CA',
                'Mdot':   'Mdot_Msun',
                'area': 'Area_Rsun',
                'ff': 'ff_percent',
+               'B': 'BField',
                }
     Lnew = []
     for name in LNames:

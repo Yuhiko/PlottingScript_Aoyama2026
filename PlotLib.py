@@ -392,16 +392,10 @@ def PlotErrScat(
 
 
 def naming(name, prefix, mode, flg_range):
-    if name.endswith("_CA"):
-        PN1 = name
-        PE1 = "E" + name
-    elif name.startswith("CA_"):  ## use CASPAR but modified
-        PN1 = name
-        PE1 = name + "_range"
-    elif name.startswith(("Mass", "radius", "vff")):
-        PN1 = name
-        PE1 = name + "_err"
-    elif flg_range:  ### In this order, DeRedLum comes to here even with 'Lum'
+    # if name.startswith("CA_"):  ## use CASPAR but modified
+    #     PN1 = name
+    #     PE1 = name + "_range"
+    if flg_range:  ### In this order, DeRedLum comes to here even with 'Lum'
         PN1 = prefix + f"{mode}." + name
         PE1 = prefix + f"{mode}." + name + "_range"
     elif any([ww in name for ww in ["Ratio", "Lum"]]) and "DeRedLum" not in name:
@@ -421,33 +415,22 @@ def labeling(axt, name, flg_x, Force_log=False):
         axis_xy = "x"
     else:
         axis_xy = "y"
+    ### axis_xy will be removed when it doesn't have range
     ##########
-    if name == "Mass":
-        axis_xy = ""
-        label = r"Mass [$M_\mathrm{J}$]"
-        vrange = [0, 500]
-        if flg_log:
-            vrange[0] = 10
-    elif name == "radius":
-        axis_xy = ""
-        label = r"Radius [$R_\mathrm{J}$]"
-        vrange = [0, 20]
-        if flg_log:
-            vrange[0] = 1
-    elif name == "Area":
+    if name == "Area":
         label = r"Emitting Area [$R^2_\mathrm{J}$]"
         flg_log = True
         vrange = [1e-2, 1e4]
     ###################
     ##### solar normalization
-    elif name == "Mass_Msun":
+    elif name == "Mass_CA":
         axis_xy = ""
         label = r"Mass [$M_\odot$]"
         vrange = [0, 0.5]
         flg_log = True  ### for test
         if flg_log:
             vrange[0] = 1e-2
-    elif name == "radius_Rsun":
+    elif name == "Radius_CA":
         axis_xy = ""
         label = r"Radius [$R_\odot$]"
         vrange = [0, 2]
@@ -521,7 +504,7 @@ def labeling(axt, name, flg_x, Force_log=False):
         label = r"$L_\mathrm{acc}$ [$L_\odot$]"
         vrange = [1e-5, 1e2]
         flg_log = True
-    elif name == "Bstar" or name == "BFlux":
+    elif name == "Bstar" or name == "BField":
         label = r"$B_\mathrm{*}$ [G]"
         flg_log = True
         vrange = [10, 1e4]
@@ -553,7 +536,7 @@ def labeling(axt, name, flg_x, Force_log=False):
         label = r"$\dot{M}_\mathrm{CASPAR}$ [$M_\odot\,\mathrm{yr}^{-1}$]"
         vrange = [1e-11, 2e-6]
         flg_log = True
-    elif name == "CA_LaccLin":
+    elif name == "LaccLin_CA":
         label = r"$L_\mathrm{acc, CASPAR}$ [$L_\odot$]"
         vrange = [1e-5, 1e2]
         flg_log = True
