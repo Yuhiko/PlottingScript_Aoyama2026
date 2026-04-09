@@ -174,7 +174,7 @@ if __name__ == "__main__":
     parse.add_argument(
         "--data-path",
         type=Path,
-        default=cwd / "Aoyama+2026.parquet",
+        default=cwd / "Aoyama2026.parquet",
         help="JSON file path",
     )
     parse.add_argument(
