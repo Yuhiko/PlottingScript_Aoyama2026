@@ -5,7 +5,7 @@ This repository contains plotting scripts associated with the paper:
 **Hydrogen Line Emission in Accreting Very-Low-Mass Objects I: Spectral Analysis of the Shock-Origin Narrow Component**
 
 The source data are archived on Zenodo:  
-**10.5281/zenodo.19398530**
+**[10.5281/zenodo.19398530](https://doi.org/10.5281/zenodo.19398530)**
 
 ## Contents
 - `GeneratePlot.py`: script used to generate figures
