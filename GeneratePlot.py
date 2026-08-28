@@ -53,7 +53,11 @@ class PlotParams:
                          )
     ##########
 
-
+def DFCaution(text):
+    answer = input( text + ' Continue? [Y/n]:')
+    if answer.lower() in ['n', 'no']:
+        print('Cancelled.')
+        raise SystemExit
     
 
 def main(args):
@@ -63,10 +67,11 @@ def main(args):
     xcol = args.x
     ycol = args.y
     if xcol is None:
-        xcol = Params.ColNames
+        xcol = Params.ColNames        
     if ycol is None:
         ycol = Params.ColNames
     if xcol is None and ycol is None:
+        DFCaution(" No variable name was specified, so this script will generate about 400 figures.")
         flg_ALL = True
     else:
         flg_ALL = False
