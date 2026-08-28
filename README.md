@@ -24,9 +24,9 @@ The authoritative source data are archived on Zenodo.
 Download `Aoyama2026.parquet` from the Zenodo record and place it in the working directory.
 
 ## Usage
-Run:
+Run:```bash
 python GeneratePlot.py
-
+```
 The variables for the x- and y-axes can be specified with the `--x` and `--y` options.  
 If no options are given, the script generates figures for combinations of major properties (about 400 figures in total).  
 For variable names and their units, please refer to `README_data.txt` in the Zenodo record.
