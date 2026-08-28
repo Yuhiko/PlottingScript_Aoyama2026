@@ -4,7 +4,7 @@ from functools import partial
 import re
 ###
 import pandas as pd
-
+# import smplotlib # Uncomment to use the classical SuperMongo/IDL style.
 ######
 import PlotLib as PL
 
@@ -211,9 +211,8 @@ if __name__ == "__main__":
         action="store_true",
         help="Show only samples observed on multiple dates, connected by lines",
     )
-
-    # parse.add_argument("--hide-suspecious", action='store_true',
-    #                    help='Hide suspecious samples, which are transparent in default')
+    # parse.add_argument("--hide-suspicious", action='store_true',
+    #                    help='Hide suspicious samples, which are transparent by default')
     args = parse.parse_args()
     args.save_path.mkdir(parents=False, exist_ok=True)
     main(args)
