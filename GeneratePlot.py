@@ -23,33 +23,34 @@ class PlotParams:
             ##### Fitting Parameters
             "v0",
             "n0",
-            "ff_percent",
+            "ff",
             "Area_Rsun",
-            "Av",
+            "AV",
             ##### Combined
             "Mdot_Msun",
             "vRat",
             "BField",
             "Lacc",
             ##### Literature Values
-            'LaccLin_CA',
-            "LaccRat",
+            #'LaccLin_CA',
+            'Lacc_CA',
+            #"LaccRat",
         ]
-        Lines =  ['Ha','Hb','Hg','H6','H8','H9','Pb']
+        Lines =  ['Ha','Hb','Hg','H6','H8','H9','Pb','Brg']
         self.LumObsNames = [f'Lum_Obs_{line}' for line in Lines]
         self.LumFitNames = [f'Lum_Fit_{line}' for line in Lines[:]]
         self.LumBCNames  = [f'Lum_BC_{line}' for line in Lines[1:]]
         self.DeRedLumObsNames  = [f'DeRedLum_Obs_{line}' for line in Lines[:]]
         self.DeRedLumFitNames  = [f'DeRedLum_Fit_{line}' for line in Lines[:]]
         self.DeRedLumBCNames   = [f'DeRedLum_BC_{line}' for line in Lines[1:]]
-        self.LObs_LaccNames  = [f'LObs_Lacc_{line}' for line in Lines[:]]
-        self.LFit_LaccNames  = [f'LFit_Lacc_{line}' for line in Lines[:]]
-        self.LBC_LaccNames   = [f'LBC_Lacc_{line}' for line in Lines[1:]]
+        # self.LObs_LaccNames  = [f'LObs_Lacc_{line}' for line in Lines[:]]
+        # self.LFit_LaccNames  = [f'LFit_Lacc_{line}' for line in Lines[:]]
+        # self.LBC_LaccNames   = [f'LBC_Lacc_{line}' for line in Lines[1:]]
         ###
         self.ColNames = (self.ColNames +
                          self.LumObsNames + self.LumFitNames + self.LumBCNames + 
-                         self.DeRedLumObsNames + self.DeRedLumFitNames + self.DeRedLumBCNames +
-                         self.LObs_LaccNames + self.LFit_LaccNames + self.LBC_LaccNames
+                         self.DeRedLumObsNames + self.DeRedLumFitNames + self.DeRedLumBCNames
+                         #+ self.LObs_LaccNames + self.LFit_LaccNames + self.LBC_LaccNames
                          )
     ##########
 
@@ -66,16 +67,18 @@ def main(args):
     FigPath = args.save_path
     xcol = args.x
     ycol = args.y
-    if xcol is None:
-        xcol = Params.ColNames        
-    if ycol is None:
-        ycol = Params.ColNames
     if xcol is None and ycol is None:
         DFCaution(" No variable name was specified, so this script will generate about 400 figures.")
         flg_ALL = True
     else:
         flg_ALL = False
-    ###
+    ###########
+    if xcol is None:
+        xcol = Params.ColNames
+    ##########
+    if ycol is None:
+        ycol = Params.ColNames
+    ################
     xcol = NameNormalize(xcol)
     ycol = NameNormalize(ycol)
     #########################
@@ -109,12 +112,21 @@ def main(args):
 
     #######################
     ## Plotting Estimates #
-    i2_0 = 0
+    if flg_ALL:
+        itotal = int( len(xcol) * (len(ycol)-1) / 2 )
+    else:
+        itotal = len(xcol) * len(ycol)
+    ##################
+    ## plot
+    i2_0   = 0
+    icount = 0
     for ii, name1 in enumerate(xcol):
         if flg_ALL:
             i2_0 = ii + 1
         for name2 in ycol[i2_0:]:
-            RefFunc = ReferenceFuncs(name1, name2)
+            icount += 1
+            print(f'{icount:5d}/{itotal}: plotting {name1} -- {name2}')
+            RefFunc = ReferenceFuncs(name1, name2)            
             PL.PlotErrScat(
                 Base_df,
                 name1,
@@ -126,24 +138,23 @@ def main(args):
                 Func_Drow=RefFunc,
                 flg_MultiDate=args.multi_epoch,
             )
-
-
+    ############
+    print('Completed')
 ################################################
 
 
 def ReferenceFuncs(xx, yy):
     def Lacc_Lline(aa, bb):
-        if aa in ["Lacc", "LaccLin_CA"]:
+        if aa in ["Lacc", "Lacc_CA"]:
             if any([key in bb for key in ["Lum_BC", "Lum_Obs", "Lum_Fit"]]):
                 line = bb.split("_")[-1]
                 return line
         ####
         return None
-
     #####
     if {xx, yy} == {"Mass_Msun", "Mdot_Msun"}:
         Func = PL.Plot_EmpRel_MMdot
-    elif {xx, yy} == {"Lacc", "CA_LaccLin"}:
+    elif {xx, yy} == {"Lacc", "Lacc_CA"}:
         Func = PL.Plot_yEQx
     elif (line := Lacc_Lline(xx, yy)) is not None:
         Func = partial(PL.Plot_EmpRel, line=line, flg_xLacc=True)
@@ -160,7 +171,8 @@ def NameNormalize(LNames):
                'radius': 'Radius_CA',
                'Mdot':   'Mdot_Msun',
                'area': 'Area_Rsun',
-               'ff': 'ff_percent',
+               #'ff': 'ff_percent',
+               'Av': 'AV',
                'B': 'BField',
                }
     Lnew = []

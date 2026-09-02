@@ -56,6 +56,8 @@ def Plot_EmpRel(
                 aa, bb = (1.04, 2.78)
             elif line == "Pb":
                 aa, bb = (1.06, 2.76)
+            elif line == "Brg":
+                aa, bb = (1.19, 4.02)                
             else:
                 raise ValueError("PSFE.Plot_EmpRel: Please Specify Line Name")
         elif ER == "Rigliaco12":
@@ -84,6 +86,8 @@ def Plot_EmpRel(
                 aa, bb = (0.83, 2.04)
             elif line == "Pb":
                 aa, bb = (0.86, 2.21)
+            elif line == "Brg":
+                aa, bb = (0.85, 2.84)
             else:
                 continue
         #########
@@ -392,10 +396,10 @@ def PlotErrScat(
 
 
 def naming(name, prefix, mode, flg_range):
-    # if name.startswith("CA_"):  ## use CASPAR but modified
-    #     PN1 = name
-    #     PE1 = name + "_range"
-    if flg_range:  ### In this order, DeRedLum comes to here even with 'Lum'
+    if name in ['Lacc_CA']:  ## use CASPAR but modified
+        PN1 = name
+        PE1 = name + "_range"
+    elif flg_range:  ### In this order, DeRedLum comes to here even with 'Lum'
         PN1 = prefix + f"{mode}." + name
         PE1 = prefix + f"{mode}." + name + "_range"
     elif any([ww in name for ww in ["Ratio", "Lum"]]) and "DeRedLum" not in name:
@@ -489,7 +493,7 @@ def labeling(axt, name, flg_x, Force_log=False):
         label = r"$f_\mathrm{f}$ [%]"
         vrange = [1e-4, 2e2]
         flg_log = True
-    elif name == "Av":
+    elif name == "AV":
         label = r"$A_\mathrm{V}$ [mag]"
         vrange = [0, 10]
         # if flg_log: vrange[0] = 0.1
@@ -527,16 +531,17 @@ def labeling(axt, name, flg_x, Force_log=False):
         ###########
         flg_log = True
     ############## CASPAR
-    elif name == "LACC_CA":
-        label = r"$\log_{10} L_\mathrm{acc, CASPAR}$ [$L_\odot$]"
-        vrange = [-5, 2]
-        # flg_log = True
+    # elif name == "LACC_CA":
+    #     label = r"$\log_{10} L_\mathrm{acc, CASPAR}$ [$L_\odot$]"
+    #     vrange = [-5, 2]
+    #     # flg_log = True
     elif name == "MDOT_CA":
         axis_xy = ""
         label = r"$\dot{M}_\mathrm{CASPAR}$ [$M_\odot\,\mathrm{yr}^{-1}$]"
         vrange = [1e-11, 2e-6]
         flg_log = True
-    elif name == "LaccLin_CA":
+    #elif name == "LaccLin_CA":
+    elif name == "Lacc_CA":
         label = r"$L_\mathrm{acc, CASPAR}$ [$L_\odot$]"
         vrange = [1e-5, 1e2]
         flg_log = True
