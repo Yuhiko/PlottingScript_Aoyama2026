@@ -9,6 +9,7 @@ The source data are archived on Zenodo:
 
 ## Contents
 - `GeneratePlot.py`: script used to generate figures
+- `GenerateCSV.py`: script used to generate csv file from parquet file
 - `PlotLib.py`: script contains the subroutines
 
 ## Requirements
