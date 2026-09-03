@@ -19,7 +19,7 @@ jobs:
         run: uv sync --python 3.8 --resolution lowest-direct
 
       - name: Run test CSV
-        run: uv run --no-sync python3 GenerateCSV.py
+        run: uv run --no-sync python3 GenerateCSV.py --yes
 
       - name: Run test Plot
-        run: uv run --no-sync python3 GeneratePlot.py
+        run: uv run --no-sync python3 GeneratePlot.py --yes
