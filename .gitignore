@@ -4,4 +4,5 @@ Fig/
 *.parquet
 *.json
 *.dat
+\#*
 README_data.md

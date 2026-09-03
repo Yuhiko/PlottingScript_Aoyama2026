@@ -1,6 +1,5 @@
 import argparse
 from pathlib import Path
-from functools import partial
 import re
 import numpy as np
 ###
@@ -156,13 +155,19 @@ def MakeModeIndex(df, DirectCols, ModeCols, flg_BestMode=False,
     if not flg_BestMode:
         idx.append('mode')
     ##############
-    merged = tmp_Fid.merge(
-        tmp_BCS.loc[:,
-                    tmp_BCS.columns.str.startswith(BCSSuff) |
-                    tmp_BCS.columns.isin(['Object', 'Date', 'mode'])
-                    ],
-        on = idx,
-        how = 'left')
+    merged = pd.concat([tmp_Fid,
+                        tmp_BCS.loc[:,
+                                    tmp_BCS.columns.str.startswith(BCSSuff)
+                                    #| tmp_BCS.columns.isin(['Object', 'Date', 'mode'])
+                                    ]]
+                       , axis=1)
+    # merged = tmp_Fid.merge(
+    #     tmp_BCS.loc[:,
+    #                 tmp_BCS.columns.str.startswith(BCSSuff) |
+    #                 tmp_BCS.columns.isin(['Object', 'Date', 'mode'])
+    #                 ],
+    #     on = idx,
+    #     how = 'left')
     ########
     # uni_col = list( {
     #     col.split('.')[-1]: col
@@ -173,16 +178,23 @@ def MakeModeIndex(df, DirectCols, ModeCols, flg_BestMode=False,
 
 def OpenRangeCell(df, cols):
     RangeCols = [tem for tem in cols if tem.endswith('_range')]
+    new_df    = df.copy()
     for col in RangeCols:
-        name = col.removesuffix('_range')
-        print(col)
+        name = col[:-6]
+        #print(col, name)
         vals = df[col].apply(
             lambda xx: xx if isinstance(xx, (list, tuple, np.ndarray))
             else [np.nan, np.nan]
         )
-        df[ [name+'_low', name+'_up'] ] = pd.DataFrame(
-            vals.tolist(),
-            index=df.index )
+        # new_df[ [name+'_low', name+'_up'] ] = pd.DataFrame(
+        #     vals.tolist(),
+        #     index=new_df.index )
+        new_df = pd.concat( [new_df,
+                             pd.DataFrame(vals.tolist(),
+                                          columns = [ name+'_low', name+'_up'],
+                                          index=df.index)
+                             ],
+                            axis=1)
     ###################
     ## reorder
     ordered = []
@@ -195,13 +207,23 @@ def OpenRangeCell(df, cols):
             ordered += [col+'_low', col+'_up']
         #########
     #######
-    print(df[ordered])
-    return df, ordered
+    ordered_df = new_df[ordered].copy()
+    return ordered_df, ordered
 
 
+def DFCaution(text):
+    answer = input( text + ' Continue? [Y/n]:')
+    if answer.lower() in ['n', 'no']:
+        print('Cancelled.')
+        raise SystemExit
 
 def main(args):
-    Base_df  = pd.read_parquet(args.data_path)
+    if args.data_path.exists():
+        Base_df  = pd.read_parquet(args.data_path)
+    else:
+        DFCaution(f'{args.data_path} is not found. Sample data will be instead used.')
+        Base_df  = pd.read_parquet( Path('tests/data/sample.parquet'))
+    ####    
     DataPath = args.save_path
     DirectCols, ModeCols = ResolveColNames(args.cols)
     #########################

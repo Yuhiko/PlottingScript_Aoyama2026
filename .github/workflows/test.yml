@@ -1,0 +1,23 @@
+name: Compatibility test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  minimum-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: action/checkout@v7
+      
+      - uses: astral-sh/setup-uv@v9
+      
+      - name: Install Python
+        run: uv python install 3.9
+
+      - name: Install minimum dependencies
+        run: uv sync --resolution lowest-direct
+
+      - name: Run tests
+        run: uv run pytest

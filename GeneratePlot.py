@@ -63,7 +63,12 @@ def DFCaution(text):
 
 def main(args):
     Params = PlotParams()
-    Base_df = pd.read_parquet(args.data_path)
+    if args.data_path.exists():
+        Base_df  = pd.read_parquet(args.data_path)
+    else:
+        DFCaution(f'{args.data_path} is not found. Sample data will be instead used.')
+        Base_df  = pd.read_parquet( Path('tests/data/sample.parquet'))
+    ####    
     FigPath = args.save_path
     xcol = args.x
     ycol = args.y
