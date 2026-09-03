@@ -13,4 +13,4 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest",]
+dev = ["pytest>=7.4",]
