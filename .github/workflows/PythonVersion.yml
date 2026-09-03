@@ -36,9 +36,10 @@ jobs:
       - name: Show versions
         run: |
           uv run --no-sync python --version
-          uv run python -c "import numpy; print(numpy.__version__)"
-          uv run python -c "import pandas; print(pandas.__version__)"
-          uv run python -c "import pyarrow; print(pyarrow.__version__)"
+          uv run python -c "import numpy; print('numpy ', numpy.__version__)"
+          uv run python -c "import pandas; print('pandas ', pandas.__version__)"
+          uv run python -c "import astropy; print('astropy ',astropy.__version__)"
+          uv run python -c "import pyarrow; print('pyarrow',pyarrow.__version__)"
 #          uv run python -c "import fastparquet; print(fastparquet.__version__)"
 
       - name: Run test CSV
