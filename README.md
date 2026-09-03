@@ -12,11 +12,12 @@ The source data are archived on Zenodo:
 - `PlotLib.py`: script contains the subroutines
 
 ## Requirements
-- Python 3.11
+- Python3
 - numpy
 - pandas
 - matplotlib
 - astropy
+- pyarrow
 
 ## Data
 The authoritative source data are archived on Zenodo.
