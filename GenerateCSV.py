@@ -221,7 +221,8 @@ def main(args):
     if args.data_path.exists():
         Base_df  = pd.read_parquet(args.data_path)
     else:
-        DFCaution(f'{args.data_path} is not found. Sample data will be instead used.')
+        DFCaution(f'{args.data_path} is not found. Sample data will be instead used.',
+                  args.yes)
         Base_df  = pd.read_parquet( Path('tests/data/sample.parquet'))
     ####    
     DataPath = args.save_path
@@ -342,6 +343,11 @@ if __name__ == "__main__":
         action="store_true",
         help="Show only the slit-loss calibrated samples",
     )    
+    parse.add_argument(
+        '-y', '--yes',
+        action='store true',
+        help='Automatically answer to confirmation prompts'
+    )
     args = parse.parse_args()
     args.save_path.mkdir(parents=False, exist_ok=True)
     main(args)

@@ -54,7 +54,9 @@ class PlotParams:
                          )
     ##########
 
-def DFCaution(text):
+def DFCaution(text, flg_pass=False):
+    if flg_pass:
+        return
     answer = input( text + ' Continue? [Y/n]:')
     if answer.lower() in ['n', 'no']:
         print('Cancelled.')
@@ -66,14 +68,16 @@ def main(args):
     if args.data_path.exists():
         Base_df  = pd.read_parquet(args.data_path)
     else:
-        DFCaution(f'{args.data_path} is not found. Sample data will be instead used.')
+        DFCaution(f'{args.data_path} is not found. Sample data will be instead used.',
+                  args.yes)
         Base_df  = pd.read_parquet( Path('tests/data/sample.parquet'))
     ####    
     FigPath = args.save_path
     xcol = args.x
     ycol = args.y
     if xcol is None and ycol is None:
-        DFCaution(" No variable name was specified, so this script will generate about 400 figures.")
+        DFCaution(" No variable name was specified, so this script will generate about 400 figures.",
+                  args.yes)
         flg_ALL = True
     else:
         flg_ALL = False
@@ -227,6 +231,11 @@ if __name__ == "__main__":
         "--multi-epoch",
         action="store_true",
         help="Show only samples observed on multiple dates, connected by lines",
+    )
+    parse.add_argument(
+        '-y', '--yes',
+        action='store true',
+        help='Automatically answer to confirmation prompts'
     )
     # parse.add_argument("--hide-suspicious", action='store_true',
     #                    help='Hide suspicious samples, which are transparent by default')
