@@ -33,7 +33,7 @@ jobs:
         run: |
           uv sync --python ${{ matrix.python }}
 
-      - name Show versions
+      - name: Show versions
         run: |
           uv run --no-sync python --version
           uv run python -c "import numpy; print(numpy.__version__)"
