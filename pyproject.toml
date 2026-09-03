@@ -9,7 +9,7 @@ dependencies = [
 	     "pandas>=1.5",
 	     "astropy>=5.2",
 	     "matplotlib>=3.7",
-	     "pyarrow>=2023.1"
+	     "fastparquet>=2023.1"
 ]
 
 [dependency-groups]
