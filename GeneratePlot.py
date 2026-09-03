@@ -234,7 +234,7 @@ if __name__ == "__main__":
     )
     parse.add_argument(
         '-y', '--yes',
-        action='store true',
+        action='store_true', dest='yes',
         help='Automatically answer to confirmation prompts'
     )
     # parse.add_argument("--hide-suspicious", action='store_true',
