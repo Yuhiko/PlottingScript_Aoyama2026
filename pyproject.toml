@@ -8,7 +8,7 @@ dependencies = [
 	     "numpy>=1.23",
 	     "pandas>=1.5",
 	     "astropy>=5.2",
-	     "fastparquet>=2023.1"
+	     "pyarrow>=10"
 ]
 
 [dependency-groups]
