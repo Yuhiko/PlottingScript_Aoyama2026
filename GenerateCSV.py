@@ -211,7 +211,11 @@ def OpenRangeCell(df, cols):
     return ordered_df, ordered
 
 
-def DFCaution(text):
+
+def DFCaution(text, flg_pass=False):
+    if flg_pass:
+        return
+
     answer = input( text + ' Continue? [Y/n]:')
     if answer.lower() in ['n', 'no']:
         print('Cancelled.')
