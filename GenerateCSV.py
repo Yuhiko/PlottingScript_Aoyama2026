@@ -281,7 +281,7 @@ def main(args):
     Base_df.loc[OutputMask, OutputCols].to_csv(DataPath/args.file_name,
                                             index=True,na_rep=args.nan,
                                             float_format=args.float_format)
-    print( (DataPath/args.file_name).name + ' is succesfully generated')
+    print( str((DataPath/args.file_name).resolve()) + ' is succesfully generated')
 ################################################
 
 
