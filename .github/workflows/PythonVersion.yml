@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-test: false
+      fail-fest: false
       matrix:
         python:
         - "3.8"
