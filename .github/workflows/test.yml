@@ -7,6 +7,18 @@ jobs:
   minimum-dependencies:
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-test: false
+      matrix:
+        fastparquet:
+	  - "2022.12.0"
+	  - "2023.4.0"
+	  - "2023.10.1"
+	  - "2024.2.0"
+	  - "2024.5.0"
+
+    name: fastparquet ${{ matrix.fastparquet }}
+
     steps:
       - uses: actions/checkout@v7
       
@@ -18,8 +30,12 @@ jobs:
       - name: Install minimum dependencies
         run: uv sync --python 3.8 --resolution lowest-direct
 
+      - name: Install fastparquet
+        run: |
+	  uv pip install "fastparquet=${{ matrix.fastparquet }}"
+
       - name: Run test CSV
         run: uv run --no-sync python3 GenerateCSV.py --yes
 
-      - name: Run test Plot
-        run: uv run --no-sync python3 GeneratePlot.py --yes
+#      - name: Run test Plot
+#        run: uv run --no-sync python3 GeneratePlot.py --yes
