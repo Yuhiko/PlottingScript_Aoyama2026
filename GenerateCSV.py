@@ -212,15 +212,8 @@ def OpenRangeCell(df, cols):
 
 
 
-def DFCaution(text, flg_pass=False):
-    if flg_pass:
-        return
 
-    answer = input( text + ' Continue? [Y/n]:')
-    if answer.lower() in ['n', 'no']:
-        print('Cancelled.')
-        raise SystemExit
-
+    
 def main(args):
     if args.data_path.exists():
         readF = args.data_path
@@ -281,7 +274,7 @@ def main(args):
     Base_df.loc[OutputMask, OutputCols].to_csv(DataPath/args.file_name,
                                             index=True,na_rep=args.nan,
                                             float_format=args.float_format)
-    print( str((DataPath/args.file_name).resolve()) + ' is succesfully generated')
+    print( str((DataPath/args.file_name).resolve()) + ' is generated successfully')
 ################################################
 
 
@@ -354,6 +347,19 @@ if __name__ == "__main__":
         action='store_true', dest='yes',
         help='Automatically answer to confirmation prompts'
     )
+    parse.add_argument(
+        '--caspar-path',
+        type=Path,
+        default=cwd/'CASPAR.csv',
+        help='Datapath to CASPAR.csv'
+    )
+    parse.add_argument(
+        '--caspar-cols',
+        default=None, nargs="+",
+        help="Variable names to import from CASPAR. Please download the csv from the corresponding Zenodo page. Default=None"
+    )
+
+    
     args = parse.parse_args()
     args.save_path.mkdir(parents=False, exist_ok=True)
     main(args)
