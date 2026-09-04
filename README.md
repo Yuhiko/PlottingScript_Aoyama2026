@@ -11,6 +11,7 @@ The source data are archived on Zenodo:
 - `GeneratePlot.py`: script used to generate figures
 - `GenerateCSV.py`: script used to generate csv file from parquet file
 - `PlotLib.py`: script contains the subroutines
+- `ImportExternalDV.py`: script import external database columns into the parquet file. This script is only for CASPAR.csv.
 
 ## Requirements
 - Python3
