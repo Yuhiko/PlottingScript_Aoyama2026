@@ -73,7 +73,7 @@ def main(args):
     ##########
     Base_df  = pd.read_parquet( readF, engine='pyarrow')
     Params = PlotParams()
-    FigPath = args.save_path
+    FigDir = args.save_dir
     xcol = args.x
     ycol = args.y
     if xcol is None and ycol is None:
@@ -143,7 +143,7 @@ def main(args):
                 name2,
                 Masks_in=LMask,
                 prefixes_in=Lpf,
-                SavePath=FigPath,
+                SavePath=FigDir,
                 Clist_in=Clist,
                 Func_Drow=RefFunc,
                 flg_MultiDate=args.multi_epoch,
@@ -205,7 +205,7 @@ if __name__ == "__main__":
         help="JSON file path",
     )
     parse.add_argument(
-        "--save-path",
+        "--save-dir",
         type=Path,
         default=cwd / "Fig",
         help="Directory name saving the Fits data",
@@ -241,5 +241,5 @@ if __name__ == "__main__":
     # parse.add_argument("--hide-suspicious", action='store_true',
     #                    help='Hide suspicious samples, which are transparent by default')
     args = parse.parse_args()
-    args.save_path.mkdir(parents=False, exist_ok=True)
+    args.save_dir.mkdir(parents=False, exist_ok=True)
     main(args)

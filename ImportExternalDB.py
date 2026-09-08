@@ -18,7 +18,7 @@ def DFCaution(text, flg_pass=False):
 
 
 def ExDB_match( args , Base_df):
-    raw   = pd.read_excel(args.exdb_path, header=None)
+    raw   = pd.read_csv(args.exdb_path, header=None)
     names = raw.iloc[0]
     units = raw.iloc[1]
     units.index = names

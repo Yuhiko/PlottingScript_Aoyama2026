@@ -224,7 +224,7 @@ def main(args):
     ##########
     Base_df  = pd.read_parquet( readF, engine='pyarrow')
     ####    
-    DataPath = args.save_path
+    #DataPath = args.save_path
     DirectCols, ModeCols = ResolveColNames(args.cols)
     #########################
     PrefixFid = "SpecFit_Fid."
@@ -271,10 +271,10 @@ def main(args):
     Base_df, OutputCols = OpenRangeCell(Base_df, OutputCols)
     ##########
     ## save ##
-    Base_df.loc[OutputMask, OutputCols].to_csv(DataPath/args.file_name,
+    Base_df.loc[OutputMask, OutputCols].to_csv(args.save_path,
                                             index=True,na_rep=args.nan,
                                             float_format=args.float_format)
-    print( str((DataPath/args.file_name).resolve()) + ' is generated successfully')
+    print( str((args.save_path).resolve()) + ' is generated successfully')
 ################################################
 
 
@@ -293,12 +293,12 @@ if __name__ == "__main__":
         default=cwd / "Fig",
         help="Directory name saving the data table",
     )
-    parse.add_argument(
-        "--file-name",
-        type=str,
-        default= "data.csv",
-        help="File name",
-    )
+    # parse.add_argument(
+    #     "--file-name",
+    #     type=str,
+    #     default= "data.csv",
+    #     help="File name",
+    # )
     ########
     ## format
     parse.add_argument(
@@ -347,19 +347,17 @@ if __name__ == "__main__":
         action='store_true', dest='yes',
         help='Automatically answer to confirmation prompts'
     )
-    parse.add_argument(
-        '--caspar-path',
-        type=Path,
-        default=cwd/'CASPAR.csv',
-        help='Datapath to CASPAR.csv'
-    )
-    parse.add_argument(
-        '--caspar-cols',
-        default=None, nargs="+",
-        help="Variable names to import from CASPAR. Please download the csv from the corresponding Zenodo page. Default=None"
-    )
+    # parse.add_argument(
+    #     '--caspar-path',
+    #     type=Path,
+    #     default=cwd/'CASPAR.csv',
+    #     help='Datapath to CASPAR.csv'
+    # )
+    # parse.add_argument(
+    #     '--caspar-cols',
+    #     default=None, nargs="+",
+    #     help="Variable names to import from CASPAR. Please download the csv from the corresponding Zenodo page. Default=None"
+    # )
 
-    
     args = parse.parse_args()
-    args.save_path.mkdir(parents=False, exist_ok=True)
     main(args)
