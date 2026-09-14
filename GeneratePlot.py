@@ -77,7 +77,7 @@ def main(args):
     xcol = args.x
     ycol = args.y
     if xcol is None and ycol is None:
-        DFCaution(" No variable name was specified, so this script will generate about 400 figures.",
+        DFCaution(" No variable name was specified, so this script will generate about 1800 figures.",
                   args.yes)
         flg_ALL = True
     else:

@@ -72,7 +72,7 @@ if __name__ == "__main__":
         "--data-path",
         type=Path,
         default=cwd / "Aoyama2026.parquet",
-        help="JSON file path",
+        help="JSON file path (*.parquet)",
     )
     parse.add_argument(
         "--save-path",
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         '--exdb-path',
         type=Path,
         default=cwd/'CASPAR.csv',
-        help='Datapath to external database. Default: CASPAR.csv. If you use another dabatase, pelase modify this script.'
+        help='Datapath to external database. Default: CASPAR.csv. If you use another dabatase, please modify this script.'
     )
     parse.add_argument(
         '--exdb-cols',
