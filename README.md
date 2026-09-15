@@ -34,5 +34,5 @@ python GeneratePlot.py
 ```
 
 - The variables for the x- and y-axes can be specified with the `--x` and `--y` options.  
-- If no options are given, the script generates figures for combinations of major properties (about 400 figures in total).  
+- If no options are given, the script generates figures for combinations of major properties (about 1800 figures, ~140 MB in total).  
 - For variable names and their units, please refer to `README_data.txt` in the Zenodo record.
